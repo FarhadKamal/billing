@@ -1,0 +1,29 @@
+.submit {
+    background: #0189A8;
+    border: none;
+    padding: 4px 8px 4px 8px;
+    color: #FFF;
+	font-size: 14px;
+    box-shadow: 1px 1px 5px #B6B6B6;
+    border-radius: 3px;
+    text-shadow: 1px 1px 1px #9E3F3F;
+    cursor: pointer;
+}
+.submit:hover {
+    background: #FA0953;
+}
+.button {
+    background: #008DEB;
+    border: none;
+    padding: 10px 20px 10px 20px;
+    color: #FFF;
+	font-size: 14px;
+    box-shadow: 1px 1px 5px #B6B6B6;
+    border-radius: 3px;
+    text-shadow: 1px 1px 1px #9E3F3F;
+    cursor: pointer;
+}
+.button:hover {
+    background: #27426B
+}
+

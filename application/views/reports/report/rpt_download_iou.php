@@ -1,0 +1,92 @@
+<?php if($options == '2'){?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Report</title>
+</head>
+<body> 
+<?php } elseif($options == '3') {
+header("Content-type: application/octet-stream");
+header("Content-Disposition: attachment; filename=IOU.xls;");
+header("Content-Type: application/ms-excel");
+header("Pragma: no-cache");
+header("Expires: 0");
+}?>
+
+	
+<?php 
+if($results->result()){
+
+
+
+?>
+<table border="0"  CELLPADDING="0" CELLSPACING="0" width="80%" align="center" valign="top" >
+	<tr><td align="Center" ><b>IOU Report Request Date Wise</b></td></tr> 
+	<tr><td align="Center" ><b>from <?php echo $from; ?>  to <?php echo $to; ?></b></td></tr> 
+	</table><br/>
+	<table border="1"   CELLPADDING="0" CELLSPACING="0" width="80%" align="center" align="center" >	
+			
+		<tr>
+			<td align="Center" width="1%"><b>SL</b></td>
+			<td align="Center"><b>IOU-ID</b></td>
+			<td align="Center"><b>Company</b></td>
+			<td align="Center"><b>Request-Date</b></td>
+			<td align="Center"><b>Description</b></td>
+			<td align="Center"><b>Claimer-ID</b></td>
+			<td align="Center"><b>Claimer-Name</b></td>
+			<td align="Center"><b>Supervisor-ID</b></td>
+			<td align="Center"><b>Supervisor-Name</b></td>
+			<td align="Center"><b>Amount</b></td>
+			<td align="Center"><b>Particular</b></td>
+			<td align="Center"><b>Payment_Date</b></td>
+			<td align="Center"><b>Status</b></td>
+			<td align="Center"><b>Action</b></td>
+		</tr> 
+	<?php 
+	$sl=0;
+
+	foreach ($results->result() as $mydata): 
+	$sl=$sl+1;
+	$view='&nbsp<a href="'.base_url().'index.php/reports/reports/view_iou/'.$mydata->id.'" target="about_blank" class="view">view</a>'.'<br/>';
+	
+	$Status="Pending";
+	
+	if($mydata->cancel_status==0){
+	
+		if($mydata->step_status==5)
+		$Status="Payment Made";
+		else if($mydata->step_status==4)
+		$Status="Ready for Payment";
+	
+	}else $Status="Canceled";
+	
+	?>	
+
+		<tr>
+		<td align="center"><b><?php echo $sl ?></b></td>
+		<td align="center"><b><?php echo $mydata->id ?></b></td>
+		<td align="center"><b><?php echo $mydata->vCompany ?></b></td>
+		<td align="center"><b><?php echo $mydata->req_date ?></b></td>
+		<td align="center"><b><?php echo $mydata->purpose ?></b></td>	
+		<td align="center"><b><?php echo $mydata->claimerID ?></b></td>
+		<td align="center"><b><?php echo $mydata->claimerName ?></b></td>
+		<td align="center"><b><?php echo $mydata->supervisorID ?></b></td>
+		<td align="center"><b><?php echo $mydata->supervisorrName ?></b></td>
+		<td align="center"><b><?php echo $mydata->amount ?></b></td>
+		<td align="center"><b><?php echo $mydata->parts ?></b></td>
+		<td align="center"><b><?php if($mydata->cancel_status==0) echo $mydata->payment_date ?></b></td>
+		<td align="center"><b><?php echo $Status ?></b></td>	
+		
+	
+		<td align="center"><b><?php echo $view ?></b></td>	
+		</tr>	
+	<?php  endforeach; ?>
+
+	</table>
+	
+
+	<?php }else echo "No Record Found";
+	if($options == '2'){?>		
+	</body>
+</html>
+<?php }?>
